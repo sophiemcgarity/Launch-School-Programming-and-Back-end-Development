@@ -16,16 +16,16 @@ end
 
 def operation_to_message(op)
   word = case op
-          when '1'
-            'Adding'
-          when '2'
-            'Subtracting'
-          when '3'
-            'Multiplying'
-          when '4'
-            'Dividing'
-          end
-  word        
+         when '1'
+           'Adding'
+         when '2'
+           'Subtracting'
+         when '3'
+           'Multiplying'
+         when '4'
+           'Dividing'
+         end
+  word
 end
 
 prompt(messages('welcome', LANGUAGE))
@@ -53,7 +53,7 @@ loop do # main loop
       prompt(MESSAGES['not_valid_num'])
     end
   end
-  
+
   number2 = ''
   loop do
     prompt(MESSAGES['second_num'])
@@ -64,7 +64,7 @@ loop do # main loop
       prompt(MESSAGES['not_valid_num'])
     end
   end
-  
+
   operator_prompt = <<-MSG
     What operation would you like to perform?
     1) add
@@ -72,25 +72,25 @@ loop do # main loop
     3) multiply
     4) divide
   MSG
-  
+
   prompt(operator_prompt)
-  
+
   operator = ''
   loop do
     operator = Kernel.gets.chomp
-    
+
     if %w(1 2 3 4).include?(operator)
       break
     else
       prompt("Must choose 1, 2, 3, 4")
     end
   end
-  
+
   prompt("#{operation_to_message(operator)} the two numbers...")
-  
+
   result = case operator
            when '1'
-             number1.to_i + number2.to_i 
+             number1.to_i + number2.to_i
            when '2'
              number1.to_i - number2.to_i
            when '3'
@@ -98,9 +98,9 @@ loop do # main loop
            when '4'
              number1.to_f / number2.to_f
            end
-  
+
   prompt("The result is #{result}")
-  
+
   prompt(MESSAGES['another_calc'])
   answer = Kernel.gets.chomp
   break unless answer.downcase.start_with?('y')
