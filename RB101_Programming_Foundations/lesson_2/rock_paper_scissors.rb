@@ -1,12 +1,11 @@
-VALID_CHOICE = {
-  r:  'rock',
-  p:  'paper',
-  s: 'scissors',
-  l:  'lizard',
-  k: 'spock'
-}
+VALID_CHOICES = %w(r p s l k)
 
-puts VALID_CHOICE
+CHOICE_ABREVS = { r: 'rock',
+                  p: 'paper',
+                  s: 'scissors',
+                  l: 'lizard',
+                  k: 'spock' 
+                }
 
 WIN_CONDITIONS = {
   r: [:s, :l],
@@ -15,6 +14,8 @@ WIN_CONDITIONS = {
   l: [:p, :k],
   k: [:r, :s],
 }
+
+WINNING_SCORE = 5
 
 def prompt(message)
   puts("=> #{message}")
@@ -34,24 +35,15 @@ def display_results(player, computer)
   end
 end
 
-def get_player_choice
-  choice = ''
-  loop do
-    prompt("Choose one: (r)ock (p)aper (s)cissors (l)izard spoc(k)")
-    choice = gets.chomp.downcase
-
-    if VALID_CHOICE.include?(choice)
-      break
-    else
-      prompt("That's not a valid choice.")
-    end
-    
-  end
+def display_score(player_score, computer_score)
+  prompt("Player score is: #{player_score}")
+  prompt("Computer score is: #{computer_score}")
 end
 
 def welcome_message
-  prompt('Rock, Paper, Scissors, Lizard, Spock')
-  prompt('Rules: 
+  prompt('Welcome to: Rock, Paper, Scissors, Lizard, Spock - The Game')
+  prompt('First to win five rounds is the ultimate winner.')
+  prompt('Here are the rules: 
           Scissors cuts paper,
           paper covers rock, 
           rock crushes lizard, 
@@ -65,20 +57,42 @@ def welcome_message
 end
 
 loop do
+  choice = ''
+  player_score = 0
+  computer_score = 0
   welcome_message
   
-  get_player_choice
-
-  computer_choice = VALID_CHOICE.sample
-
-  prompt("You chose: #{choice}; Computer chose: #{computer_choice}")
-
-  display_results(choice, computer_choice)
-
+  loop do
+    
+    loop do
+      prompt("Choose one: (r)ock (p)aper (s)cissors (l)izard spoc(k)")
+      choice = gets.chomp.downcase
+  
+      break if VALID_CHOICES.include?(choice)
+      prompt("That's not a valid choice.")
+    end
+  
+    computer_choice = VALID_CHOICES.sample
+    
+    prompt("You chose: #{CHOICE_ABREVS[choice.to_sym]}; Computer chose: #{CHOICE_ABREVS[computer_choice.to_sym]}")
+    
+    display_results(choice.to_sym, computer_choice.to_sym)
+    
+    if win?(choice.to_sym, computer_choice.to_sym)
+      player_score += 1
+    elsif win?(computer_choice.to_sym, choice.to_sym)
+      computer_score += 1
+    end
+        
+    display_score(player_score, computer_score)
+    
+    break if player_score == WINNING_SCORE || computer_score == WINNING_SCORE
+    
+  end
   prompt("Do you want to play again? ('y' to play again)")
-  answer = Kernel.gets().chomp()
-
-  break unless answer.downcase().start_with?('y')
+  answer = gets.chomp
+  
+  break unless answer.downcase.start_with?('y')
 end
 
 prompt("Thank you for playing!")
