@@ -34,11 +34,6 @@ def display_results(player, computer)
   end
 end
 
-def display_score(player_score, computer_score)
-  prompt("Player score is: #{player_score}")
-  prompt("Computer score is: #{computer_score}")
-end
-
 def welcome_message
   prompt('Welcome to: Rock, Paper, Scissors, Lizard, Spock - The Game')
   prompt('First to win five rounds is the ultimate winner.')
@@ -53,6 +48,11 @@ def welcome_message
           paper disproves Spock,
           Spock vaporizes rock,
           rock crushes scissors.')
+end
+
+def display_score(player_score, computer_score)
+  prompt("Player score is: #{player_score}")
+  prompt("Computer score is: #{computer_score}")
 end
 
 loop do
@@ -72,8 +72,8 @@ loop do
 
     computer_choice = VALID_CHOICES.sample
 
-    prompt("You chose: #{CHOICE_ABREVS[choice.to_sym]};
-            Computer chose: #{CHOICE_ABREVS[computer_choice.to_sym]}")
+    prompt("You chose: #{CHOICE_ABREVS[choice.to_sym]}")
+    prompt("Computer chose: #{CHOICE_ABREVS[computer_choice.to_sym]}")
 
     display_results(choice.to_sym, computer_choice.to_sym)
 
@@ -88,10 +88,9 @@ loop do
     break if player_score == WINNING_SCORE || computer_score == WINNING_SCORE
   end
 
-  prompt("Do you want to play again? ('y' to play again)")
-  answer = gets.chomp
-
-  break unless answer.downcase.start_with?('y')
+  prompt("Do you want to play again? ('yes' to play again, any key to quit)")
+  answer = gets.chomp.downcase
+  break unless answer.downcase == 'yes'
 end
-
+system "clear"
 prompt("Thank you for playing!")
