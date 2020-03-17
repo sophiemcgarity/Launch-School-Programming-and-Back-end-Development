@@ -77,7 +77,22 @@
 # p double_odd_numbers(my_numbers)  
 # p my_numbers    
 # ------------------------------------------------------------------------------
-# create a method called multiple that can take additional arguments to determine the transformation criteria
+# create a method called multiply that can take additional arguments to determine the transformation criteria
 
-def multiple
-end
+# def multiply(numbers, multiplier)
+#   multiplied_numbers = []
+#   counter = 0
+  
+#   loop do
+#     break if counter == numbers.size
+    
+#     multiplied_numbers << numbers[counter] * multiplier
+    
+#     counter += 1
+#   end  
+  
+#   multiplied_numbers
+# end
+
+# p my_numbers = [1, 4, 3, 7, 2, 6]
+# p multiply(my_numbers, 3)
