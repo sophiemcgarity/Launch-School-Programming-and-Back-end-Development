@@ -1,5 +1,5 @@
 # transforming a hash
-#
+
 # produce = {
 #   'apple' => 'Fruit',
 #   'carrot' => 'Vegetable',
@@ -7,15 +7,27 @@
 #   'broccoli' => 'Vegetable'
 # }
 
+# # loop through the keys in the hash to have access to their values
+# # store the selected keys and values in a new hash
+# # use a counter to increment ezch key position
+# # using a loop
+# # break if the counter is == to the hash keys size
+# # current key will be equal to the input hash key counter position
+# # current value will equal the input hash 
+
 # def select_fruit(produce_list)
-#   produce_keys = produce_list.keys
-#   counter = 0
+#   produce_keys = produce_list.keys 
+#   # .keys - returns a new array populated with the keys from this hash
 #   selected_fruits = {}
+#   counter = 0
   
 #   loop do
 #     break if counter == produce_keys.size
     
+#     # current_key is the counter position in the newly created array, produced from using .keys on the original hash
 #     current_key = produce_keys[counter]
+    
+#     # accesses the value from the current key posotion
 #     current_value = produce_list[current_key]
     
 #     if current_value == 'Fruit'
@@ -24,10 +36,11 @@
     
 #     counter += 1
 #   end
-#   selected_fruits
 # end
 
-# p select_fruit(produce)
+
+# select_fruit(produce)
+
 
 # ------------------------------------------------------------------------------
 
