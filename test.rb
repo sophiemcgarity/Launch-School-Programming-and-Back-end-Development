@@ -1,9 +1,6 @@
-def test(b)
-  b.map {|letter| "I like the letter: #{letter}"}
+odd, even = [1, 2, 3].partition do |num|
+  num.odd?
 end
 
-a = ['a', 'b', 'c']
-test(a)
-
-p a
-p b
+p odd
+p even

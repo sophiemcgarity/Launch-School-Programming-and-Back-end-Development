@@ -205,8 +205,83 @@
 #   array.select { |number| array.index(number).even? }
 # end
 
-p oddities([2, 3, 4, 5, 6])
-p oddities([1, 2, 3, 4, 5, 6])
-p oddities(['abc', 'def'])
-p oddities([123])
-p oddities([])
+# p oddities([2, 3, 4, 5, 6])
+# p oddities([1, 2, 3, 4, 5, 6])
+# p oddities(['abc', 'def'])
+# p oddities([123])
+# p oddities([])
+
+# 8 ----------------------------------------------------------------
+# PALINDROMIC STRINGS PART 1
+# input - string
+# output - boolean
+
+# if string == string.reverse return true
+
+# def palindrome?(string)
+#   string == string.reverse
+# end
+
+# p palindrome?('madam')
+# p palindrome?('Madam')
+# p palindrome?("madam i'm adam")
+# p palindrome?('356653')
+
+# input - array
+
+# def palindrome(array)
+#   array == array.reverse
+# end
+
+# p palindrome(['a', 'b', 'b', 'a'])
+# p palindrome(['a', 'b'])
+
+# input string or array
+
+# def palindrome?(input)
+#   chars = []
+#   count = 0
+  
+#   while input.size > count
+#     chars << input[count]
+#     count += 1
+#   end
+  
+#   chars.reverse.join == chars.join
+# end
+
+# p palindrome?(['a', 'b', 'b', 'a'])
+# p palindrome?('madamd')
+
+# 9 ----------------------------------------------------------------
+# PALINDROMIC STRINGS PART 2
+# input - string
+# output - boolean
+
+# case-insensitive
+# ignore all non-alphanumeric characters
+
+# def real_palindrome?(input)
+#   new_input = input.downcase.delete('^a-z0-9')
+#   new_input == new_input.reverse
+# end
+
+# p real_palindrome?('madam')
+# p real_palindrome?('Madam')
+# p real_palindrome?("Madam, I'm Adam") 
+# p real_palindrome?('356653')
+# p real_palindrome?('356a653')
+# p real_palindrome?('123ab321')
+# 10 ----------------------------------------------------------------
+# PALINDROMIC NUMBERS
+
+def palindromic_number?(number)
+  input = number.to_s
+  input == input.reverse
+end
+
+
+p palindromic_number?(34543)
+p palindromic_number?(123210)
+p palindromic_number?(22)
+p palindromic_number?(5)
