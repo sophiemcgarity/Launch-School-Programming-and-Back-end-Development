@@ -195,14 +195,21 @@
 # output - array
 
 # store each number number in the totals array
-# 
+# output the first number in the array
+# add num[0] add num[1]
 
 # def running_total(numbers)
-  
-  
+#   sum = 0
+#   numbers.map {|number| sum += number}
+# end
+
+# def running_total(numbers)
+#   sum = 0
+#   numbers.each_with_object([]) {|number, array| array << sum += number }
 # end
 
 # p running_total([2, 5, 13])
+# p running_total([14, 11, 7, 15, 20])
 
 # 7 -----------------------------------------------------------------------------
 # CONVERT A STRING TO A NUMBER!
@@ -213,17 +220,118 @@
 # reassign the string hash key to the value
 # if the digits key matches the array value, change to hash value
 
-DIGITS = {
-  '0' => 0, '1'=> 1, '2'=> 2, '3'=> 3, '4'=> 4, '5'=> 5, '6'=> 6, '7'=> 7, '8'=> 8, '9'=> 9
-}
+# DIGITS = {
+#   '0' => 0, '1'=> 1, '2'=> 2, '3'=> 3, '4'=> 4, '5'=> 5, '6'=> 6, '7'=> 7, '8'=> 8, '9'=> 9
+# }
 
-def string_to_integer(string)
-  digits = string.chars.map {|str| str = DIGITS[str]}
+# def string_to_integer(string)
+#   digits = string.chars.map {|str| str = DIGITS[str]}
   
-  value = 0
-  digits.each {|digit| value = 10 * value + digit }
-  value
-end
+#   value = 0
+#   digits.each {|digit| value = 10 * value + digit }
+#   value
+# end
 
-p string_to_integer('4321')
-p string_to_integer('570')
+# p string_to_integer('4321')
+# p string_to_integer('570')
+
+# Write a hexadecimal_to_integer method that converts a string representing a hexadecimal number to its integer value.
+
+# HEX = {
+#   '0' => 0, '1'=> 1, '2'=> 2, '3'=> 3, '4'=> 4, '5'=> 5, '6'=> 6, '7'=> 7, '8'=> 8, '9'=> 9, 'A' => 10, 'B' => 11, 'C' => 12, 'D' => 13, 'E' => 14, 'F' => 15
+# }
+
+# def hex_to_integer(hex)
+#   digits = hex.chars.map {|str| str = HEX[str]}
+#   hex_value = digits.reduce(:+)
+#   hex_value
+# end
+
+# p hex_to_integer('BB1')
+
+# 8 ------------------------------------------------------------------------------------
+# Convert a String to a Signed Number!
+
+# DIGITS = {
+#   '0' => 0, '1'=> 1, '2'=> 2, '3'=> 3, '4'=> 4, '5'=> 5, '6'=> 6, '7'=> 7, '8'=> 8, '9'=> 9
+# }
+
+# def string_to_integer(string)
+#   digits = string.chars.map {|str| str = DIGITS[str]}
+  
+#   value = 0
+#   digits.each {|digit| value = 10 * value + digit }
+#   value
+# end
+
+# def string_to_signed_integer(string)
+#   if string[0] == '-'
+#     string.delete_prefix!('-')
+#     digits = string.chars.map {|str| str = DIGITS[str]}
+#     value = 0
+#     digits.each {|digit| value = 10 * value + digit }
+#     value * -1
+#   elsif string[0] == '+'
+#     string.delete_prefix!('+')
+#     digits = string.chars.map {|str| str = DIGITS[str]}
+#     value = 0
+#     digits.each {|digit| value = 10 * value + digit }
+#     value
+#   else
+#     digits = string.chars.map {|str| str = DIGITS[str]}
+#     value = 0
+#     digits.each {|digit| value = 10 * value + digit }
+#     value
+#   end
+# end
+
+# def string_to_signed_integer(string)
+#   case string[0]
+#   when '-' then -string_to_integer(string[1..-1])
+#   when '+' then string_to_integer(string[1..-1])
+#   else          string_to_integer(string)
+#   end  
+# end
+
+# refactored solution
+# def string_to_signed_integer(string)
+#   if string[0] == '-' || string[0] == '+'
+#     new_integer = string_to_integer(string[1..-1])
+#     string[0] == '-' ? -new_integer : new_integer
+#   else
+#     string_to_integer(string)
+#   end
+# end
+
+# p string_to_signed_integer('-33')
+# p string_to_signed_integer('+570')
+# p string_to_signed_integer('230')
+
+
+# 9 ----------------------------------------------------------------------------
+# Convert a Number to a String!
+# input - positive interger or 0
+# output - string
+
+# create a digit to string hash of each of the values to convert
+# seperate the number by each digit into an array
+# map each integer to the coresponding string in the hash
+
+# STRINGS = {
+#   0 => '0', 1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5', 6 => '6', 7 => '7', 8 => '8', 9 => '9'
+# }
+
+# def integer_to_string(numbers)
+#   digits = numbers.digits.reverse
+#   strings = digits.map {|digit| digit = STRINGS[digit]}
+#   strings.join
+# end
+
+DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+
+
+p integer_to_string(4321) # '4321'
+p integer_to_string(0) # '0'
+p integer_to_string(5000) # '5000'
+

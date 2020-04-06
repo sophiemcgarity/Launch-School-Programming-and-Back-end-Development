@@ -275,13 +275,13 @@
 # 10 ----------------------------------------------------------------
 # PALINDROMIC NUMBERS
 
-def palindromic_number?(number)
-  input = number.to_s
-  input == input.reverse
-end
+# def palindromic_number?(number)
+#   input = number.to_s
+#   input == input.reverse
+# end
 
 
-p palindromic_number?(34543)
-p palindromic_number?(123210)
-p palindromic_number?(22)
-p palindromic_number?(5)
+# p palindromic_number?(34543)
+# p palindromic_number?(123210)
+# p palindromic_number?(22)
+# p palindromic_number?(5)
