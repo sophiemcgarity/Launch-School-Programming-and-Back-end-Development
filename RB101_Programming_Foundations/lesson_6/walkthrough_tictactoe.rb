@@ -1,20 +1,9 @@
-# Tic Tac Toe
-# 1. Display the initial empty 3x3 board.
-# 2. Ask the user to mark a square.
-# 3. Computer marks a square.
-# 4. Display the updated board state.
-# 5. If winner, display winner.
-# 6. If board is full, display tie.
-# 7. If neither winner nor board is full, go to #2
-# 8. Play again?
-# 9. If yes, go to #1
-# 10. Good bye!
-
 require 'pry'
 
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
+WIN_CONDITION = 5
 
 WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # columns
@@ -25,7 +14,7 @@ def prompt(msg)
 end
 
 # rubocop:disable Metrics/AbcSize
-def display_board(brd)
+def display_board(brd, player_score, computer_score)
   system 'clear'
   puts "You're a #{PLAYER_MARKER}. Computer is a #{COMPUTER_MARKER}"
   puts ""
@@ -54,14 +43,6 @@ def empty_squares(brd)
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
-# my solution, didn't consider removing the delimiter with less than 2 elements
-# def joinor(array, delimiter = ', ', word = 'or')
-#   last_element = " #{word} #{array.last.to_s}"
-#   array.pop
-#   array.join(delimiter) + last_element
-# end
-
-# launch school solution
 def joinor(arr, delimiter = ', ', word = 'or')
   case arr.size
   when 0 then ''
@@ -86,21 +67,30 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
+  square = nil
+  WINNING_LINES.each do |line|
+    square = find_at_risk_square(line, brd)
+    break if square
+  end
+  
+  if !square
+    square = empty_squares(brd).sample
+  end
+  
   brd[square] = COMPUTER_MARKER
 end
+
+def find_at_risk_square(line, board)
+  if board.values_at(*line).count(PLAYER_MARKER) == 2
+    board.select { |key, value| line.include?(key) && value == INITIAL_MARKER}.keys.first
+  else
+    nil
+  end
+end   
 
 def board_full?(brd)
   empty_squares(brd).empty?
 end
-
-# KEEP SCORE - make first player to win 5 rounds, wins the game
-# create a prompt informing the user of this at the start
-# create variables for the player and the computer scores
-# => player_score = 0, computer_score = 0
-
-# edited the detect winner method the increase the points to either the player or the computer based on who won the round
-
 
 def someone_won?(brd)
   !!detect_winner(brd)
@@ -117,28 +107,63 @@ def detect_winner(brd)
   nil
 end
 
-loop do
-  board = initialize_board
-
-  loop do
-    display_board(board)
-
-    player_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
-
-    computer_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
+def update_score(brd, player_score, computer_score)
+  if detect_winner(brd) == 'Player'    
+    player_score[0] += 1
+  elsif detect_winner(brd) == 'Computer'
+    computer_score[0] += 1
   end
+  prompt "Player score: #{player_score[0]}. Computer score: #{computer_score[0]}"
+end
 
-  display_board(board)
-
-  if someone_won?(board)
-    prompt "#{detect_winner(board)} won!"
+def display_round_winner(brd, p_score, c_score)
+  if someone_won?(brd)
+    prompt "#{detect_winner(brd)} won this round!"
   else
-    prompt "It's a tie!"
+    prompt "This round it's a tie!"
   end
+end
 
-  prompt "Play again? (y or n)"
+def display_match_winner(player_score, computer_score)
+  if player_score[0] >= WIN_CONDITION
+    prompt "Player Wins!!!"
+  elsif computer_score[0] >= WIN_CONDITION
+    prompt "Computer Wins!!!"
+  end
+end
+
+# initialize game loop
+loop do
+  player_score = [0]
+  computer_score = [0]
+  loop do
+  board = initialize_board
+  
+  # round loop
+    loop do
+      display_board(board, player_score, computer_score)
+    
+      player_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+      
+      computer_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+    end
+    
+    display_board(board, player_score, computer_score)
+    
+    update_score(board, player_score, computer_score)
+    display_round_winner(board, player_score, computer_score)
+    display_match_winner(player_score, computer_score)
+    
+    break if player_score[0] >= WIN_CONDITION || computer_score[0] >= WIN_CONDITION
+    
+    prompt "Press 'enter' key to start next round, or 'q' to quit the current game."
+    input = gets.chomp
+    break if input.downcase == 'q'
+  end
+  
+  prompt "Start a new game? (y or n)"
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
 end
