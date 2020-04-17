@@ -1,5 +1,3 @@
-require 'pry'
-
 WIN_CONDITION = 5
 WINNING_NUMBER = 21
 
