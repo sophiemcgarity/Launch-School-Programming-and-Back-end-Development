@@ -4,6 +4,7 @@ INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 WIN_CONDITION = 5
+STARTING_PLAYER = 'choose' # 'player' or 'computer' or 'choose'
 
 WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # columns
@@ -56,6 +57,7 @@ end
 
 def player_places_piece!(brd)
   square = ''
+  
   loop do
     prompt "Choose a square (#{joinor(empty_squares(brd))}):"
     square = gets.chomp.to_i
@@ -68,9 +70,23 @@ end
 
 def computer_places_piece!(brd)
   square = nil
+
   WINNING_LINES.each do |line|
-    square = find_at_risk_square(line, brd)
+    square = find_at_risk_square(line, brd, COMPUTER_MARKER)
     break if square
+  end
+
+  if !square
+    WINNING_LINES.each do |line|
+      square = find_at_risk_square(line, brd, PLAYER_MARKER)
+      break if square
+    end
+  end
+
+  if !square
+    if empty_squares(brd).include?(5)
+      square = 5
+    end
   end
   
   if !square
@@ -80,13 +96,13 @@ def computer_places_piece!(brd)
   brd[square] = COMPUTER_MARKER
 end
 
-def find_at_risk_square(line, board)
-  if board.values_at(*line).count(PLAYER_MARKER) == 2
+def find_at_risk_square(line, board, marker)
+  if board.values_at(*line).count(marker) == 2
     board.select { |key, value| line.include?(key) && value == INITIAL_MARKER}.keys.first
   else
     nil
   end
-end   
+end
 
 def board_full?(brd)
   empty_squares(brd).empty?
@@ -132,26 +148,55 @@ def display_match_winner(player_score, computer_score)
   end
 end
 
-# initialize game loop
+def alternate_player(current_player)
+  current_player == 'player' ? current_player = 'computer' : current_player = 'player'
+end
+
+def place_piece!(brd, current_player)
+  current_player == 'player' ? player_places_piece!(brd) : computer_places_piece!(brd)
+end
+
+def pick_starting_player(current_player)
+  if STARTING_PLAYER == 'choose'
+    prompt "Pick who goes first: Type 'p' for player or 'c' for computer."
+    input = ''
+    
+    loop do
+      input = gets.chomp
+      break if input.downcase == 'p' || input.downcase == 'c'
+      prompt "Please enter a valid input. 'p' for player or 'c' for computer."
+    end
+    
+    if input == 'p'
+      return current_player = 'player'
+    elsif input == 'c'
+      return current_player = 'computer'
+    end
+    
+  elsif STARTING_PLAYER == 'player'
+    return current_player = 'player'
+    
+  elsif STARTING_PLAYER == 'computer'
+    return current_player = 'computer'
+  end
+end
+
 loop do
   player_score = [0]
   computer_score = [0]
+  current_player = pick_starting_player(current_player)
+  
   loop do
   board = initialize_board
   
-  # round loop
     loop do
       display_board(board, player_score, computer_score)
-    
-      player_places_piece!(board)
-      break if someone_won?(board) || board_full?(board)
-      
-      computer_places_piece!(board)
+      place_piece!(board, current_player)
+      current_player = alternate_player(current_player)
       break if someone_won?(board) || board_full?(board)
     end
     
     display_board(board, player_score, computer_score)
-    
     update_score(board, player_score, computer_score)
     display_round_winner(board, player_score, computer_score)
     display_match_winner(player_score, computer_score)
@@ -165,7 +210,7 @@ loop do
   
   prompt "Start a new game? (y or n)"
   answer = gets.chomp
-  break unless answer.downcase.start_with?('y')
+  break unless answer.downcase == 'y'
 end
 
 prompt "Thanks for playing tic tac toe!! Goodbye."
