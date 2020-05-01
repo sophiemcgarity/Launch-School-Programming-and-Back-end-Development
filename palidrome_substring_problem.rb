@@ -1,9 +1,3 @@
-# --- Problem ---
-# inputs: 
-# outputs: 
-# rules: 
-# --- Data Structures / Algorithm ---
-
 # write a method that will return a substring based on a specified indices
 def substring(string, num1, num2 = 0)
   return string[num1..num2] unless num2 == 0
