@@ -1,0 +1,15 @@
+--- Problem ---
+inputs: 
+outputs: 
+rules: 
+--- Data Structures / Algorithm ---
+
+Problem Solving Script
+Step 1: Read the problem and load it into your brain
+Step 2: Write out your approach in a step-by-step process.
+Step 3: If no tests are provided, write some out with your expected output.
+Step 4: Layout your rough draft of the problem with pseudocode.
+Step 5: Rewrite solution in actual code.
+Step 6: Test your code.
+Step 7: Refactor your code.
+Step 8: Handle any curveballs.

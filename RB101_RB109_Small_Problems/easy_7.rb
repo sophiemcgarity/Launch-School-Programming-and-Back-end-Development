@@ -139,7 +139,7 @@ require 'pry'
 # puts staggered_case('ALL_CAPS')
 # puts staggered_case('ignore 77 the 444 numbers')
 
-# 5 ----------------------------------------------------------------------
+# 6 ----------------------------------------------------------------------
 # Staggered Caps (part 2)
 # def staggered_case(string)
 #   result = ''
@@ -188,14 +188,84 @@ require 'pry'
 # 7 -----------------------------------------------------------
 # Multiplicative Average
 
-# --- Problem ---
-# inputs: array
-# outputs: string
-# rules: 
-  # Method takes an array of integers as the input
-  # all the integers are multiplied together
-  # the result is divided by the number of integers in the Array
-  # result is rounded to 3 decimal places
-# --- Data Structures / Algorithm ---
-  # iterate over the array
+# def show_multiplicative_average(array)
+#   multiplied_result = 1.to_f
   
+#   array.each { |num| multiplied_result *= num }
+#   # multiplied_result = array.reduce(:*)
+  
+#   average = (multiplied_result / array.length)
+  
+#   puts "The result is #{format('%.3f', average)}"
+# end
+
+# show_multiplicative_average([3, 5])
+# show_multiplicative_average([6])
+# show_multiplicative_average([2, 5, 7, 11, 13, 17])
+
+
+# 8 -----------------------------------------------------------
+# Multiply Lists
+
+# def multiply_list(array1, array2)
+#   # output = []
+  
+#   # array1.each_with_index do |num, index|
+#   #   output << num * array2[index]
+#   # end
+  
+#   # output
+# end
+
+# def multiply_list(array1, array2)
+#   array1.zip(array2).map { |arr| arr.reduce(:*) }
+# end
+
+# p multiply_list([3, 5, 7], [9, 10, 11]) # [27, 50, 77]
+
+# 9 -----------------------------------------------------------
+# Multiply All Pairs
+
+# def multiply_all_pairs(array1, array2)
+#   result = []
+  
+#   array1.each do |num|
+#     array2.each do |el|
+#       result << num * el
+#     end
+#   end
+  
+#   result.sort
+# end
+
+# p multiply_all_pairs([2, 4], [4, 3, 1, 2]) #== [2, 4, 4, 6, 8, 8, 12, 16]
+
+
+# 10 --------------------------------------------------------------
+# The End Is Near But Not Here
+
+# def penultimate(string)
+#   words = string.split(' ')
+#   words[-2]
+# end
+
+# p penultimate('last word') == 'last'
+# p penultimate('Launch School is great!') == 'is'
+
+# Further exploration
+# middle number
+  
+def middle_word(string)
+  words = string.split(' ')
+  index = (words.length.to_f / 2.to_f).round(half: :up)
+  if index < 1
+    string
+  else
+    words[index - 1]
+  end
+end
+
+p middle_word('School is great!') # => 'is'
+p middle_word('Launch School is great!') # => 'School'
+p middle_word('') # => ''
+p middle_word('School') # => 'School'
