@@ -128,8 +128,57 @@ def repeater(string)
   result
 end
 
-p repeater("Good job!") #== "GGoooodd  jjoobb!!"
-p repeater('') #== ''
-p repeater('Hello') #== "HHeelllloo"
+# p repeater("Good job!") #== "GGoooodd  jjoobb!!"
+# p repeater('') #== ''
+# p repeater('Hello') #== "HHeelllloo"
 
 # 8 ---------------------------------------------------------------------------
+# CONSONANTS = %w(b c d f g h j k l m n p q r s t v w x y z)
+  
+# def double_consonants(string)
+#   result = ''
+  
+#   string.each_char do |char|
+#     result << char
+#     result << char if CONSONANTS.include?(char.downcase)
+#   end
+  
+#   result
+# end
+
+# p double_consonants('String') == "SSttrrinngg"
+# p double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"
+# p double_consonants("July 4th") == "JJullyy 4tthh"
+# p double_consonants('') == ""
+
+# 9 -------------------------------------------------------------------------------
+# Convert number to reversed array of digits
+
+# def reversed_number(num)
+#   string = num.to_s
+#   string.reverse.to_i
+# end
+
+# p reversed_number(12345) == 54321
+# p reversed_number(12213) == 31221
+# p reversed_number(456) == 654
+# p reversed_number(12000) == 21 # No leading zeros in return value!
+# p reversed_number(12003) == 30021
+# p reversed_number(1) == 1
+
+
+# 10 ----------------------------------------------------------------------------------
+# Get the middle character
+
+# def center_of(string)
+#   index = string.length / 2
+  
+#   if string.length.odd?
+#     string[index] 
+#   else 
+#     string[index - 1] + string[index]
+#   end
+# end
+
+# p center_of('I love ruby')
+# p center_of('Launch') #== 'un'
