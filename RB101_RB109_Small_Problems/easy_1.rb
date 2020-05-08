@@ -1,295 +1,136 @@
-# UNDERSTAND THE PROBLEM
-# input
-# output
-# edge cases? focus on input e.g. empty
-# failure / bad input
+# 1 ------------------------------------------------------------------------------------
+# Repeat Yourself
 
-# DATA STRUCTURE
-# input data and their own requirements
-
-# ALGORITHM
-# write a solution in language
-# verify with examples / test cases
-
-# ABSTRACTION
-# avoid soliving big problems, describe in 1 - 2 sentences
-# ------------------------------------------------------------------
-
-# 1 --------------------------------------------------------------
-# input - string and integer
-# output - string
-
-# data structure input - string
-
-# algorithm
-# method takes a string and a positive integer(num)
-# print string break if counter == num
-
-# def repeat(string, num)
-#   counter = 0
-#   while counter < num
-#     puts string
-#     counter += 1
-#   end
+# def repeat(string, number)
+#   number.times { puts string }
 # end
 
-# def repeat(string, num)
-#   num.times { puts string }
-# end
 # repeat('Hello', 3)
 
-# 2 --------------------------------------------------------------
-# input - one integer
-# output - boolean, true if absolute value is odd
-# data structure - integer
-# cannot use #odd? or #even?
-# assume input is valid
-# take one a positive or negative integer, if odd == true, else false
+# 2 -------------------------------------------------------------------------------------------
+# Odd
 
-# def is_odd?(num)
-#   if num % 2 != 0
-#     true
-#   else
-#     false
-#   end
-# end
-
-# def is_odd?(num)
-#   num % 2 == 1
-# end
-
-# def is_odd?(num)
-#   num % 2 != 0
-# end
-
-# def is_odd?(num)
-#   if num.remainder(2) == 0
-#     false
-#   else
-#     true
-#   end
+# def is_odd?(number)
+#   number.remainder(2) == 1 ? true : false
 # end
 
 # puts is_odd?(2)    # => false
 # puts is_odd?(5)    # => true
-# puts is_odd?(-17)  # => true
-# puts is_odd?(-8)   # => false
-# puts is_odd?(0)    # => false
-# puts is_odd?(7)    # => true
 
-# 3 --------------------------------------------------------------
-# input - positive integer
-# output - array of integers
-# data structures - integer, array, string
-# input an integer, convert to array, seperate by each character, map each character to array
+# 3 --------------------------------------------------------------------------------------
+# List of Digits
 
-# def digit_list(num)
-#   num.to_s.chars.map(&:to_i)
+# def digit_list(number)
+#   num = number.to_s.chars
+#   num.map(&:to_i)
 # end
 
-# def digit_list(num)
-#   numbers = num.to_s.split('')
-#   numbers.map(&:to_i)
+# puts digit_list(12345) == [1, 2, 3, 4, 5]     # => true
+# puts digit_list(7) == [7]                     # => true
+# puts digit_list(375290) == [3, 7, 5, 2, 9, 0] # => true
+# puts digit_list(444) == [4, 4, 4]     
+
+# 4 ------------------------------------------------------------------------------------
+# How many?
+
+# vehicles = [
+#   'car', 'car', 'truck', 'car', 'SUV', 'suv', 'truck',
+#   'motorcycle', 'motorcycle', 'car', 'truck'
+# ]
+
+# def count_occurrences(array)
+#   counted_hash = {}
+#   downcased_items = array.map! { |item| item.downcase}
+
+#   downcased_items.each do |el|
+#     counted_hash[el] = array.count(el)
+#   end
+  
+#   counted_hash.each do |key, value|
+#     puts "#{key} => #{value}"
+#   end
 # end
 
-# p digit_list(12345)
+# count_occurrences(vehicles)
 
-# 4 --------------------------------------------------------------
-# input - array
-# output - hash
-
-vehicles = [
-  'car', 'car', 'truck', 'car', 'SUV', 'truck',
-  'motorcycle', 'motorcycle', 'car', 'truck'
-]
-
-def count_occurrences(array)
-  occurrences = {}
-  
-  array.uniq.each do |element|
-    occurrences[element] = array.count(element)
-  end
-  
-  occurrences.each do |element, count|
-    puts "#{element} => #{count}"
-  end
-end
-
-
-count_occurrences(vehicles)
-
-
-# 5 ----------------------------------------------------------------
-# REVERSE IT (PART 1)
-# input - string
-# output - string 
-
-# split the string by ' '
-# reverse index position
+# 5 -------------------------------------------------------------------------------
+# Reverse It (part 1)
 
 # def reverse_sentence(string)
 #   string.split.reverse.join(' ')
 # end
 
-# p reverse_sentence('')
-# p reverse_sentence('Hello World')
-# p reverse_sentence('Reverse these words')
+# puts reverse_sentence('') == ''
+# puts reverse_sentence('Hello World') == 'World Hello'
+# puts reverse_sentence('Reverse these words') == 'words these Reverse'
 
+# 6 -------------------------------------------------------------------------------------------
+# Reverse It (part 2)
 
-
-# 6 ----------------------------------------------------------------
-# REVERSE IT (PART 2)
-# input - string
-# output - string
-
-# input string can contain one or more words
-# if string.size >= 5 reverse the word
-
-# def reverse_words(sentence)
-#   words_array = sentence.split(' ')
+# def reverse_words(string)
+#   result = []
   
-#   words_array.each do |word|
-#     word.reverse! if word.size >= 5
-#   end
-
-#   words_array.join(' ')
-# end
-
-# def reverse_words(sentence)
-#   words = []
-  
-#   sentence.split.each do |word|
-#     word.reverse! if word.size >= 5
-#     words << word
+#   string.split.each do |word|
+#     word.length >= 5 ? result << word.reverse : result << word
 #   end
   
-#   words.join(' ')
-# end
-
-# def reverse_words(sentence)
-#   sentence.split.map{ |word| word.size >= 5 ? word.reverse : word }.join(' ')
+#   result.join(' ')
 # end
 
 # puts reverse_words('Professional')          # => lanoisseforP
 # puts reverse_words('Walk around the block') # => Walk dnuora the kcolb
-# puts reverse_words('Launch School')   
+# puts reverse_words('Launch School')         # => hcnuaL loohcS
 
-# 7 ----------------------------------------------------------------
-# STRINGY STRINGS
+# 7 ------------------------------------------------------------------------------------
+# Stringy Strings
 
-# input - integer
-# output - string
-
-# print 1 then 0 until string length is equal to the integer input
-# alternate prints
-# if previous was 1
-#   then print 0
-
-# def stringy(num)
-#   string = ''
-   
-#   until string.size >= num
-#     string << "10"
+# def stringy(number, start_num = 1)
+#   output_number = start_num.to_s
+#   string_value = ''
+  
+#   number.times do 
+#     string_value += output_number
+#     output_number == '1' ? output_number = '0' : output_number = '1'
 #   end
   
-#   if num.odd?
-#     string.chop
-#   else
-#     string
-#   end
+#   string_value
 # end
 
-# if the string index is even = 1
-# if string index odd = 0
-# def stringy(size, option = 1)
-#   numbers = []
-  
-#   if option == 0
-#     size.times do |index|
-#       number = index.odd? ? 1 : 0
-#       numbers << number
-#     end
-#   else
-#     size.times do |index|
-#       number = index.even? ? 1 : 0
-#       numbers << number
-#     end
-#   end
-  
-#   numbers.join
-# end
+# puts stringy(6, 1) #== '101010'
+# puts stringy(9, 0) #== '010101010'
+# puts stringy(4, 0) #== '0101'
+# puts stringy(7, 1) #== '1010101'
 
-# puts stringy(6)
-# puts stringy(9, 0)
-
-
-# 8 ----------------------------------------------------------------
+# 8 ------------------------------------------------------------------------------------
 # Array Average
 
-# input - array
-# output - intger
+# def average(array)
+#   float_result = array.reduce(:+).to_f / array.size.to_f
+#   format("%0.3f", float_result)
+# end
 
-# array.size = number to divide by
-# for each number in the input add to the total
+# puts average([1, 5, 87, 45, 8, 8]) #== 25
+# puts average([9, 47, 23, 95, 16, 52]) #== 40
 
-# def average(numbers_array)
-#   total = 0
-#   divider = numbers_array.size
+# 9 ------------------------------------------------------------------------------
+# Sum of digits
+
+# def sum(integer)
+#   digits = integer.to_s.chars
+#   digits.map(&:to_i).reduce(:+)
+# end
+
+# p sum(23) #== 5
+# p sum(496) #== 19
+# p sum(123_456_789) #== 45
+
+# 10 ------------------------------------------------------------------------
+# What's my bonus?
+
+# def calculate_bonus(salary, bonus)
+#   bonus ? (salary / 2) : 0
+# end
   
-#   numbers_array.each do |num|
-#     total += num
-#   end
-  
-#   average = total / divider
-#   average
-# end
-
-# def average(numbers_array)
-#   numbers_array.reduce(:+).to_f / numbers_array.count
-# end
-
-# puts average([1, 5, 87, 45, 8, 8])
-# puts average([9, 47, 23, 95, 16, 52])
-
-# 9 ----------------------------------------------------------------
-# SUM OF DIGITS
-
-# input - integer
-# output - integer
-
-# convert to string, split by char, convert to in and add
-
-# def sum(number)
-#   total = 0
-#   numbers_array = number.to_s.split('')
-
-#   numbers_array.each do |num|
-#     total += num.to_i
-#   end
-  
-#   total
-# end
-
-# def sum(number)
-#   number.to_s.chars.map(&:to_i).reduce(:+)
-# end
-
-# puts sum(23)
-# puts sum(496)
-# puts sum(123_456_789)
-
-# 10 ----------------------------------------------------------------
-# WHAT'S MY BONUS?
-# input - integer, boolean
-# output - integer
-
-# if true, bonus = number/2
-# if false, bonus = 0
-
-# def calculate_bonus(number, bonus)
-#   bonus ? (number/2) : 0
-# end
-
-# puts calculate_bonus(2800, true)
-# puts calculate_bonus(1000, false)
-# puts calculate_bonus(50000, true)
+# puts calculate_bonus(2800, true) == 1400
+# puts calculate_bonus(1000, false) == 0
+# puts calculate_bonus(50000, true) == 25000
