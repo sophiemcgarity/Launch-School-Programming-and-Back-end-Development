@@ -13,3 +13,10 @@ Step 5: Rewrite solution in actual code.
 Step 6: Test your code.
 Step 7: Refactor your code.
 Step 8: Handle any curveballs.
+
+Outline:
+# --- Problem ---
+# inputs: 
+# outputs: 
+# rules: 
+# --- Data Structures / Algorithm ---
