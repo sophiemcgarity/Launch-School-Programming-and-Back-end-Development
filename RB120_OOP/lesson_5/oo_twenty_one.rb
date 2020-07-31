@@ -1,6 +1,6 @@
 class Participant
   attr_accessor :name, :hand
-# test edit
+
   def initialize
     @name = name
     @hand = []
