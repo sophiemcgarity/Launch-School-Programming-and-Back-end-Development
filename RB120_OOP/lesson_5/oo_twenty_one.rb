@@ -36,6 +36,15 @@ class Participant
     total = calculate_face_value(total)
     correct_value_for_ace(total)
   end
+end
+
+class Player < Participant
+  attr_accessor :move
+
+  def initialize
+    super
+    @move = move
+  end
 
   def show_hand
     puts "-- #{name}'s hand: --"
@@ -46,20 +55,17 @@ class Participant
   end
 end
 
-class Player < Participant
-  attr_accessor :move
-
-  def initialize
-    super
-    @move = move
-  end
-end
-
 class Dealer < Participant
   NAMES = ['R2D2', 'Cayde', 'Kal', 'Ghost']
 
   def initialize
     super
+  end
+
+  def show_hand
+    puts "-- #{name}'s hand: --"
+    puts "=> #{hand[0]}"
+    puts '-------------------------'
   end
 end
 
@@ -145,6 +151,20 @@ class Game
     @dealer = Dealer.new
   end
 
+  def start
+    clear
+    welcome_message
+    ask_name
+    loop do
+      main_game
+      break unless play_again?
+      clear
+    end
+    goodbye_message
+  end
+
+  private
+
   def welcome_message
     puts "Welcome to 21. Try and beat the dealer without going bust!"
   end
@@ -157,7 +177,7 @@ class Game
     puts "What is your name?"
 
     loop do
-      player.name = gets.chomp
+      player.name = gets.chomp.strip
       break if player.name.size >= 1
       puts "Enter at least 1 character."
     end
@@ -172,11 +192,6 @@ class Game
       player.hand << deck.deal
       dealer.hand << deck.deal
     end
-  end
-
-  def show_cards
-    dealer.show_hand
-    player.show_hand
   end
 
   def hit(participant)
@@ -199,7 +214,14 @@ class Game
   end
 
   def stay_message
-    puts "#{player.name} stays!" if STAY_CHOICES.include?(player.move)
+    return unless STAY_CHOICES.include?(player.move)
+    puts "#{player.name} stays!"
+    puts '-------------------------'
+  end
+
+  def clear_and_show_hand
+    clear
+    player.show_hand
   end
 
   def player_turn
@@ -208,14 +230,15 @@ class Game
       puts "Your total is #{player.total}."
       choose_hit_or_stay
       HIT_CHOICES.include?(player.move) ? hit(player) : break
-      clear
-      player.show_hand
+      clear_and_show_hand
     end
-    clear
+    clear_and_show_hand
     stay_message
   end
 
   def dealer_turn
+    puts "#{dealer.name}'s turn."
+    dealer.show_hand
     loop do
       hit(dealer) if dealer.total < 17
       break if dealer.total > 17
@@ -237,10 +260,18 @@ class Game
     end
   end
 
-  def show_result
+  def determine_winner
     if player.total > dealer.total
-      puts "You win!"
+      'player'
     elsif dealer.total > player.total
+      'dealer'
+    end
+  end
+
+  def show_result
+    if determine_winner == 'player'
+      puts "You win!"
+    elsif determine_winner == 'dealer'
       puts "Dealer wins!"
     else
       puts "It's a tie."
@@ -281,23 +312,11 @@ class Game
     reset
     set_dealer_name
     deal_cards
-    show_cards
+    player.show_hand
     player_turn
     dealer_turn
     show_totals
     result_output
-  end
-
-  def start
-    clear
-    welcome_message
-    ask_name
-    loop do
-      main_game
-      break unless play_again?
-      clear
-    end
-    goodbye_message
   end
 end
 
