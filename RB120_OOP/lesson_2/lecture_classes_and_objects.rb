@@ -1,134 +1,39 @@
-# 1 --------------------------------------------------------------------------------
-# class Person
-#   attr_accessor :name
-  
-#   def initialize(name)
-#     @name = name
-#   end
-# end
+class Person
+  attr_accessor :first_name, :last_name
 
-# bob = Person.new('bob')
-# bob.name                  # => 'bob'
-# bob.name = 'Robert'
-# bob.name                  # => 'Robert'
+  def initialize(name)
+    set_name(name)
+  end
 
-# 2 ------------------------------------------------------------------------------
-# class Person
-#   attr_reader :first_name
-#   attr_accessor :last_name
+  def name
+    "#{first_name} #{last_name}".strip
+  end
 
-#   def initialize(first_name, last_name = '')
-#     @first_name = first_name
-#     @last_name = last_name
-#   end
-  
-#   def name
-#     "#{first_name} #{last_name}".strip
-#   end
-# end
+  def name=(full_name)
+    set_name(full_name)
+  end
 
-# bob = Person.new('Robert')
-# p bob.name                  # => 'Robert'
-# p bob.first_name            # => 'Robert'
-# p bob.last_name             # => ''
-# bob.last_name = 'Smith'
-# p bob.name                  # => 'Robert Smith'
+  def to_s
+    name
+  end
 
+  private
 
-# 3 ----------------------------------------------------------------------------
-# class Person
-#   attr_accessor :first_name, :last_name
+  def set_name(full_name)
+    parts = full_name.split
+    self.first_name = parts[0]
+    self.last_name = parts[1] ? parts[1] : ''
+  end
+end
 
-#   def initialize(name)
-#     parse_full_name(name)
-#   end
-  
-#   def name
-#     "#{first_name} #{last_name}".strip
-#   end
-  
-#   def name=(name)
-#     parse_full_name(name)
-#   end
-  
-#   private
-  
-#   def parse_full_name(full_name)
-#     parts = full_name.split
-#     self.first_name = parts.first
-#     self.last_name = parts.size > 1 ? parts.last : ''
-#   end
-# end
-
-# bob = Person.new('Robert')
-# bob.name                  # => 'Robert'
-# bob.first_name            # => 'Robert'
-# bob.last_name             # => ''
-# bob.last_name = 'Smith'
-# bob.name                  # => 'Robert Smith'
-
-# bob.name = "John Adams"
-# bob.first_name            # => 'John'
-# bob.last_name
-
-# 4 ---------------------------------------------------------------------------
-# class Person
-#   attr_accessor :first_name, :last_name
-
-#   def initialize(name)
-#     parse_full_name(name)
-#   end
-  
-#   def name
-#     "#{first_name} #{last_name}".strip
-#   end
-  
-#   def name=(name)
-#     parse_full_name(name)
-#   end
-  
-#   private
-  
-#   def parse_full_name(full_name)
-#     parts = full_name.split
-#     self.first_name = parts.first
-#     self.last_name = parts.size > 1 ? parts.last : ''
-#   end
-# end
-
-# bob = Person.new('Robert Smith')
-# rob = Person.new('Robert Smith')
-
-# p rob.name == bob.name
-
-# 5 -------------------------------------------------------------------------
-# class Person
-#   attr_accessor :first_name, :last_name
-
-#   def initialize(name)
-#     parse_full_name(name)
-#   end
-  
-#   def name
-#     "#{first_name} #{last_name}".strip
-#   end
-  
-#   def name=(name)
-#     parse_full_name(name)
-#   end
-  
-#   def to_s
-#     name
-#   end
-  
-#   private
-  
-#   def parse_full_name(full_name)
-#     parts = full_name.split
-#     self.first_name = parts.first
-#     self.last_name = parts.size > 1 ? parts.last : ''
-#   end
-# end
-
-# bob = Person.new("Robert Smith")
-# puts "The person's name is: #{bob}"
+bob = Person.new("Robert Smith")
+puts "The person's name is: #{bob}"
+# Lines 1 - 27 define the Person class
+# On line 29 a new Person object is assigned to the local variable bob. The string "Robert Smith" is passed as an argument to the constructor.
+# Lines 4 - 7 define the instance method initilize which takes one parameter name.
+# On line 5 the set_name instance method is called with the local variable name passed as an argument
+# Lines 22 - 26 define the set_name instance method that takes one argument.
+# On line 23 the passed argument string is split into an array and assigned to the local variable parts
+# On line 24 the first_name setter method is called and assigned the value of parts[0]
+# On line 25 the last_name setter method is called and assigned the value of parts[1]
+# These setter methods can be called as the attr_accessor on line 2 defines them for the Person class.
