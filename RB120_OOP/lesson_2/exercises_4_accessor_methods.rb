@@ -178,23 +178,23 @@
 # The double instance method defined on lines 169 - 171 takes a value and multiplies it by 2. This method is used in the getter and setter methods. The getter methods returns the value of the instance variable @age multiplied by 2. The setter method assigns the value of the passed in argument multiplied by 2 to the instance variable @age.
 
 # 10 ----- Unexpected Change ---------
-class Person
-  attr_accessor :name
+# class Person
+#   attr_accessor :name
   
-  def name
-    "#{@first_name} #{@last_name}"
-  end
+#   def name
+#     "#{@first_name} #{@last_name}"
+#   end
   
-  def name=(name)
-    parts = name.split
-    @first_name = parts.first
-    @last_name = parts.last
-  end
-end
+#   def name=(name)
+#     parts = name.split
+#     @first_name = parts.first
+#     @last_name = parts.last
+#   end
+# end
 
-person1 = Person.new
-person1.name = 'John Doe'
-puts person1.name
+# person1 = Person.new
+# person1.name = 'John Doe'
+# puts person1.name
 
 # The setter method on lines 188 - 192 takes one argument, a string. The string input is split into an array and the instance variables @first_name and @last_name are assigned their required values from the array.
 # The instance variables @first_name and @last_name are output with stirng interpolation seperated with a space in the getter method on lines 184 - 186
