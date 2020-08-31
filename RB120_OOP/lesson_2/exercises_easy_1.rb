@@ -1,10 +1,7 @@
-# 1 ///////////////////////////////////////////////////////////////////////////
-# Banner Class
-# Further exploration attempt
+# 1 ----- Banner Class -----
 # class Banner
-#   def initialize(message, banner_width = 20)
+#   def initialize(message)
 #     @message = message
-#     @banner_width = banner_width
 #   end
 
 #   def to_s
@@ -13,89 +10,118 @@
 
 #   private
 
-#   def banner_width
-#     if @banner_width.odd?
-#       @banner_width += 1
-#     end
-    
-#     case
-#     when @banner_width > 100
-#       return 100 
-#     when @banner_width < @message.size
-#       return (@message.size + 2)
-#     when @banner_width <= 3
-#       return 4
-#     else
-#       @banner_width
-#     end
-#   end
-  
-#   def message_spacing
-#     ' ' * ((banner_width - @message.size) / 2)
-#   end
-  
-#   def multi_line_spacing(text_line)
-#     ' ' * ((banner_width - text_line.size) / 2)
-#   end
-  
-#   def multi_line_last_spacing(first_line_size, last_line_size)
-#     ' ' * (first_line_size - last_line_size)
-#   end
-  
 #   def horizontal_rule
-#     "+#{'-' * (banner_width)}+"
+#     "+#{'-' * line_length}+"
 #   end
 
 #   def empty_line
-#     "|#{' ' * (banner_width)}|"
+#     "|#{' ' * line_length}|"
+#   end
+
+#   def line_length
+#     (@message.size + 2)
 #   end
 
 #   def message_line
-#     if @message.size > 100
-#       message_lines = @message.scan(/.{1,59}/m)
-#       message_lines.map do |message|
-#         if message == message_lines.last
-#           "|#{multi_line_spacing(message_lines[0])}#{message}#{multi_line_last_spacing(message_lines.first.size, message_lines.last.size) + multi_line_spacing(message_lines[0])}|"
-#         else
-#           "|#{multi_line_spacing(message_lines[0])}#{message}#{multi_line_spacing(message_lines[0])}|"
-#         end
-#       end
-#     else
-#       "|#{message_spacing}#{@message}#{message_spacing}|"
-#     end
+#     "| #{@message} |"
 #   end
 # end
 
-# banner = Banner.new('0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,1,2,3,4,5,6,7,8,9,', 99)
+# banner = Banner.new('To boldly go where no one has gone before.')
 # puts banner
 
+# banner = Banner.new('')
+# puts banner
 
-# 2 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# What's the Output?
+# On line 30 a new Banner object is initialized with one argument passed in, and assigned to the local variable banner
+# On lines 3 - 5 the constructor method is defined and assigns the passed in value on line 30 to the @message instance variable
+# The instance method on lines 7 - 9 is a custom implementation of the to_s method. When the object is passed as an argument to puts this to_s method is called. The implementation uses called to private instance methods inside the Banner class to create the desired output.
+# On line 11 a call to the privat method is made so all instance methods defined below this call are only accessible inside the class itself.
+# The instance method line_length defined on line 21 - 23 calculates the length of the output line. This instance method is used in horizontal_rule and empty_line
+
+# Further exploration
+# class Banner
+#   attr_reader :message
+#   attr_accessor :custom_size
+
+#   def initialize(message, custom_size = message.size)
+#     @message = message
+#     @custom_size = custom_size + 2
+#   end
+
+#   def to_s
+#     [horizontal_rule, empty_line, message_line, empty_line, horizontal_rule].join("\n")
+#   end
+
+#   private
+
+#   def horizontal_rule
+#     calc_message_line_size
+#     "+#{'-' * custom_size}+"
+#   end
+
+#   def empty_line
+#     calc_message_line_size
+#     "|#{' ' * custom_size}|"
+#   end
+
+#   def calc_message_line_size
+#     if @custom_size > 60
+#       self.custom_size = 60
+#     elsif @custom_size < message.size
+#       self.custom_size = message.size + 2
+#     end
+#   end
+
+#   def message_line_spaces
+#     calc_message_line_size
+#     ' ' * ((custom_size - message.size) / 2)
+#   end
+
+#   def message_line
+#     "|#{message_line_spaces}#{@message}#{message_line_spaces}|"
+#   end
+# end
+
+# banner = Banner.new('To boldly go where no one has gone before.', 0)
+# puts banner
+
+# banner = Banner.new('')
+# puts banner
+
+# Lines 68 - 74 define the instance method `calc_message_line_size` this reassigns the value of the instance variable `@custom_size` to ensure the message fits the terminal window. This implementation only works up to a size of 60.
+# If a custom size is set over 60 during initilaization when calling the to_s method each method call makes a call to `calc_message_line_size`. This reassigns the value of `@custom_size` dependant on which if condition is met.
+
+
+# 2 ---------- What's the Output? ------------------
 # class Pet
 #   attr_reader :name
-  
+
 #   def initialize(name)
 #     @name = name.to_s
 #   end
-  
+
 #   def to_s
-#     "My name is #{@name.upcase}" 
+#     "My name is #{@name.upcase}."
 #   end
 # end
 
 # name = 42
 # fluffy = Pet.new(name)
 # name += 1
-# puts fluffy.name #42
-# puts fluffy # My name is 42
-# puts fluffy.name #42 
-# puts name # 43 
 
-# number stays as 42 as changing the local variable outside the class does not change the value of the instance variable inside the class
+# puts fluffy.name  # => 42
+# puts fluffy       # => My name is 42.
+# puts fluffy.name  # => 42
+# puts name         # => 43
 
-# 3 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Fix the Program - Books (Part 1)
+# name is passed to the Pet.new method
+# the value of @name is assigned to the string "42"
+# the local variable name is reassigned after already being passed to the Pet.new method, therefore all of the puts method calls use "42"
+# puts name returns 43 as the local variable was reassigned by name += 1
+
+
+# 3 ---- Fix the Program - Books (part 1) ------
 # class Book
 #   attr_reader :author, :title
   
@@ -113,40 +139,10 @@
 # puts %(The author of "#{book.title}" is #{book.author}.)
 # puts %(book = #{book}.)
 
-# Further Exploration
-# What are the differences between attr_reader, attr_writer, and attr_accessor? 
-  # attr_reader - getter method, only allows for retrival of the instance method
-  # attr_writer - setter method, used to set the value of instance varaible
-  # attr_accessor - getter and setter method, allows for reading and writing of instance variables
-# Why did we use attr_reader instead of one of the other two? 
-  # after initialization the inforamtion was only being read, their wsa no need to include methods to change the instance variables
-# Would it be okay to use one of the others? Why or why not?
-  # could use the attr_accessor, however in this case their is no need to add that feature as the information is only being read
-  
-# Instead of attr_reader, suppose you had added the following methods to this class:
 
-  # def title
-  #   @title
-  # end
-  
-  # def author
-  #   @author
-  # end
-
-# Would this change the behavior of the class in any way? If so, how? If not, why not? 
-  # Would not change the behaviour as this methods are used for reading the instance variable to be output in the string
-# Can you think of any advantages of this code?
-  # it is clearer how we are reading the title and author methods from inside the class
-  
-# 4 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Fix the program - Books (part 2)
+# 4 ---- Fix the Program - Books (part 2) ------
 # class Book
 #   attr_accessor :author, :title
-  
-#   def initialize
-#     @author = author
-#     @title = title
-#   end
   
 #   def to_s
 #     %("#{title}", by #{author})
@@ -159,23 +155,19 @@
 # puts %(The author of "#{book.title}" is #{book.author}.)
 # puts %(book = #{book}.)
 
-# What do you think of this way of creating and initializing Book objects? (The two steps are separate.) Would it be better to create and initialize at the same time like in the previous exercise? What potential problems, if any, are introduced by separating the steps?
-  # Setting the value of the author and the title at initialization removes the need for the setter methos. This reduces the risk of a book's author and title being renamed incorrectly
-
-# 5 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Fix the program - Persons
+# 5 ---- Fix the Program - Persons -----
 # class Person
 #   def initialize(first_name, last_name)
 #     @first_name = first_name.capitalize
 #     @last_name = last_name.capitalize
 #   end
   
-#   def first_name=(new_first_name)
-#     @first_name = new_first_name.capitalize
+#   def first_name=(value)
+#     @first_name = value.capitalize
 #   end
   
-#   def last_name=(new_last_name)
-#     @last_name = new_last_name.capitalize
+#   def last_name=(value)
+#     @last_name = value.capitalize
 #   end
 
 #   def to_s
@@ -190,8 +182,7 @@
 # person.last_name = 'smith'
 # puts person
 
-# 6 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Fix the program - Flight Data
+# 6 ---- Fix the Program - Flight Data -----
 # class Flight
 #   def initialize(flight_number)
 #     @database_handle = Database.init
@@ -199,8 +190,7 @@
 #   end
 # end
 
-# 7 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Buggy Code - Car Mileage
+# 7 ----- Buggy Code - Car Mileage -------
 # class Car
 #   attr_accessor :mileage
 
@@ -223,8 +213,7 @@
 # car.increment_mileage(678)
 # car.print_mileage  # should print 5678
 
-# 8 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Rectangles and Squares
+# 8 ---- Rectangle and Squares ----
 # class Rectangle
 #   def initialize(height, width)
 #     @height = height
@@ -237,16 +226,15 @@
 # end
 
 # class Square < Rectangle
-#   def initialize(number)
-#     super(number, number)
+#   def initialize(size)
+#     super(size, size) # => the size argument is passed twice to super
 #   end
 # end
 
 # square = Square.new(5)
 # puts "area of square = #{square.area}"
 
-# 9 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Complete the program - Cats!
+# 9 ---- Complete the Program - Cats! ----
 # class Pet
 #   def initialize(name, age)
 #     @name = name
@@ -255,13 +243,15 @@
 # end
 
 # class Cat < Pet
-#   def initialize(name, age, description)
+#   attr_reader :name, :age, :color
+  
+#   def initialize(name, age, color)
 #     super(name, age)
-#     @description = description
+#     @color = color
 #   end
   
 #   def to_s
-#     "My cat #{@name} is #{@age} years old and has #{@description} fur."
+#     "My cat #{name} is #{age} years old and has #{color} fur."
 #   end
 # end
 
@@ -269,11 +259,7 @@
 # butterscotch = Cat.new('Butterscotch', 10, 'tan and white')
 # puts pudding, butterscotch
 
-# Further Exploration
-# Why would we be able to omit the initialize method? Would it be a good idea to modify Pet in this way? Why or why not? How might you deal with some of the problems, if any, that might arise from modifying Pet?
-  # Modifying Pet would make sense in this instance as all pets have a color, reducing the need to use an initialize method in Cat. However, if a supplied argument is unique to Cat, then initialization would be required.
-# 10 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# Refactoring Vehicles
+# 10 ----- Refactoring Vehicles ------
 # class Vehicle
 #   attr_reader :make, :model
   
@@ -312,6 +298,5 @@
 #   end
 # end
 
-# Further Exploration
-# Would it make sense to define a wheels method in Vehicle even though all of the remaining classes would be overriding it? Why or why not? If you think it does make sense, what method body would you write?
-  # If each method is being overriden each time then their isn't a point in moving it too the super class. Unless it can be used as an indicator to the developer to remember to define the number of wheels. In this case changing the instance method to an instance variable might make more sense. Also depends on if we are assuming that all vehicles have wheels.
+# Each subclass has access to the methods defined in the superclass Vehicle. The getter, setter, initialize and to_s methods
+# The Truck's class has an additional parameter payload, truck passes the make and model as arguments to super to be initialized by the inherited method
