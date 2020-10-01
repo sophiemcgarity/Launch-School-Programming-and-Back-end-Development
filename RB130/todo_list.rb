@@ -1,5 +1,5 @@
 class TodoList
-  attr_accessor :title, :todos
+  attr_accessor :title
 
   def initialize(title)
     @title = title
@@ -13,31 +13,31 @@ class TodoList
 
   def done?
     trues = []
-    todos.select do |item|
+    @todos.select do |item|
       trues << item if item.done?
     end
 
-    true if trues.size == todos.size
+    true if trues.size == @todos.size
   end
 
   def size
-    todos.size
+    @todos.size
   end
 
   def first
-    todos.first
+    @todos.first
   end
 
   def last
-    todos.last
+    @todos.last
   end
 
   def to_a
-    todos.to_a
+    @todos.to_a
   end
 
   def item_at(index)
-    todos.fetch(index)
+    @todos.fetch(index)
   end
 
   def mark_done_at(index)
@@ -49,30 +49,46 @@ class TodoList
   end
 
   def done!
-    todos.each { |item| item.done! }
+    @todos.each { |item| item.done! }
   end
 
   def shift
-    todos.shift
+    @todos.shift
   end
 
   def pop
-    todos.pop
+    @todos.pop
   end
 
   def remove_at(index)
-    index <= todos.size ? todos.delete_at(index) : (raise IndexError)
+    index <= @todos.size ? @todos.delete_at(index) : (raise IndexError)
   end
 
   def to_s
     puts "---- #{title} ----"
-    todos.each { |todo| puts todo }
+    @todos.each { |todo| puts todo }
+  end
+  
+  def each
+    @todos.each do |todo|
+      yield(todo)
+    end
+    
+    self
+  end
+  
+  def select
+    selected = TodoList.new(title)
+    each do |todo|
+      selected.add(todo) if yield(todo)
+    end
+    selected
   end
 
   private
 
   def add_todo(item)
-    todos << item ? item.class.to_s == 'Todo' : (raise TypeError.new("Can only add Todo objects"))
+    @todos << item ? item.class.to_s == 'Todo' : (raise TypeError.new("Can only add Todo objects"))
   end
 end
 
@@ -114,10 +130,14 @@ end
 todo1 = Todo.new("Buy milk")
 todo2 = Todo.new("Clean room")
 todo3 = Todo.new("Go to gym")
+
 list = TodoList.new("Today's Todos")
+list.add(todo1)
+list.add(todo2)
+list.add(todo3)
 
-list.add(todo1)                 # adds todo1 to end of list, returns list
-list.add(todo2)                 # adds todo2 to end of list, returns list
-list << (todo3)
+todo1.done!
 
-list.to_s
+p list.each { |todo| puts todo }    # you need to implement this method
+
+
