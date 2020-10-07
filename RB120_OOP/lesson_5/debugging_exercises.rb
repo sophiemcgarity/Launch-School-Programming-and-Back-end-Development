@@ -1,5 +1,4 @@
-# 1 -------------------------------------------------------------------------------------
-# Community Library
+# 1 ---- Community Library -----
 # class Library
 #   attr_accessor :address, :phone, :books
 
@@ -49,9 +48,7 @@
 
 # community_library.display_books
 
-
-# 2 ---------------------------------------------------------------------------------------
-# Animal Kingdom
+# 2 ---- Animal Kingdom ----
 # class Animal
 #   def initialize(diet, superpower)
 #     @diet = diet
@@ -99,55 +96,10 @@
 # penguin = FlightlessBird.new(:carnivore, 'drink sea water')
 # robin = SongBird.new(:omnivore, 'sing', 'chirp chirrr chirp chirp chirrrr')
 
-# 3 ------------------------------------------------------------------------------------------
-# Wish you were here
-# class Person
-#   attr_reader :name
-#   attr_accessor :location
+# 3 ---- Wish you were here ----
 
-#   def initialize(name)
-#     @name = name
-#   end
 
-#   def teleport_to(latitude, longitude)
-#     @location = GeoLocation.new(latitude, longitude)
-#   end
-# end
-
-# class GeoLocation
-#   attr_reader :latitude, :longitude
-
-#   def initialize(latitude, longitude)
-#     @latitude = latitude
-#     @longitude = longitude
-#   end
-
-#   def to_s
-#     "(#{latitude}, #{longitude})"
-#   end
-
-#   def ==(other)
-#     latitude == other.latitude && longitude == other.longitude
-#   end
-# end
-
-# # Example
-
-# ada = Person.new('Ada')
-# ada.location = GeoLocation.new(53.477, -2.236)
-
-# grace = Person.new('Grace')
-# grace.location = GeoLocation.new(-33.89, 151.277)
-
-# ada.teleport_to(-33.89, 151.277)
-
-# puts ada.location                   # (-33.89, 151.277)
-# puts grace.location                 # (-33.89, 151.277)
-# puts ada.location == grace.location # expected: true
-#                                     # actual: false
-
-# 4 ------------------------------------------------------------------------------
-# Employee Management
+# 4 ---- Employee Management ----
 # class EmployeeManagementSystem
 #   attr_reader :employer
 
@@ -237,21 +189,64 @@
 
 # miller_contracting.display_all_employees
 
-# 5 ------------------------------------------------------------------------------
-# Files
+# Private methods cannot be invoked with an explicit caller, even inside of their own class
+# In Employee#== serial_number is invoked with an explicit caller (other)
+# Protected methods work like private methods from outside the class. But from inside the class protected methods are accessible and may be invoked with an explicit caller
+
+# 5 ---- Files ----
+# class File
+#   attr_accessor :name, :byte_content
+
+#   def initialize(name)
+#     @name = name
+#   end
+
+#   alias_method :read,  :byte_content
+#   alias_method :write, :byte_content=
+
+#   def copy(target_file_name)
+#     target_file = self.class.new(target_file_name)
+#     target_file.write(read)
+
+#     target_file
+#   end
+
+#   def to_s
+#     "#{name}.#{self.class::FORMAT}"
+#   end
+# end
+
+# class MarkdownFile < File
+#   FORMAT = :md
+# end
+
+# class VectorGraphicsFile < File
+#   FORMAT = :svg
+# end
+
+# class MP3File < File
+#   FORMAT = :mp3
+# end
+
+# # Test
+
+# blog_post = MarkdownFile.new('Adventures_in_OOP_Land')
+# blog_post.write('Content will be added soon!'.bytes)
+
+# copy_of_blog_post = blog_post.copy('Same_Adventures_in_OOP_Land')
+
+# puts copy_of_blog_post.is_a? MarkdownFile     # true
+# puts copy_of_blog_post.read == blog_post.read # true
+
+# puts blog_post
+
+# 6 ---- Sorting Distances ----
 
 
-
-# 6 ---------------------------------------------------------------------------
-# Sorting Distances
+# 7 ---- Bank Balance ----
 
 
-# 7 ---------------------------------------------------------------------------
-# Bank Balance
-
-
-# 8 ----------------------------------------------------------------------------
-# Task Manager
+# 8 ---- Task Manager ----
 # class TaskManager
 #   attr_reader :owner
 #   attr_accessor :tasks
@@ -329,8 +324,8 @@
 # valentinas_tasks.display_all_tasks
 # valentinas_tasks.display_high_priority_tasks
 
-# 9 ----------------------------------------------------------------------------
-# You've Got Mail
+
+# 9 ---- You've Got Mail! ----
 # class Mail
 #   def to_s
 #     "#{self.class}"
@@ -404,7 +399,7 @@
 
 # class PostalService < CommunicationsProvider
 #   include Mailing
-  
+
 #   attr_accessor :street_address, :mailbox
 
 #   def initialize(name, street_address)
@@ -426,64 +421,4 @@
 # puts johns_postal_service.send_mail(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
 # # => undefined method `860 Blackbird Ln.' for #<PostalService:0x00005571b4aaebe8> (NoMethodError)
 
-# 10 ----------------------------------------------------------------------
-# Does it Rock or Not?
-class AuthenticationError < Exception; end
-
-# A mock search engine
-# that returns a random number instead of an actual count.
-class SearchEngine
-  def self.count(query, api_key)
-    unless valid?(api_key)
-      raise AuthenticationError, 'API key is not valid.'
-    end
-
-    rand(200_000)
-  end
-
-  private
-
-  def self.valid?(key)
-    key == 'LS1A'
-  end
-end
-
-module DoesItRock
-  API_KEY = 'LS1A'
-
-  class NoScore; end
-
-  class Score
-    def self.for_term(term)
-      positive = SearchEngine.count(%{"#{term} rocks"}, API_KEY).to_f
-      negative = SearchEngine.count(%{"#{term} is not fun"}, API_KEY).to_f
-
-      positive / (positive + negative)
-    rescue Exception
-      NoScore
-    end
-  end
-
-  def self.find_out(term)
-    score = Score.for_term(term)
-
-    case score
-    when NoScore
-      "No idea about #{term}..."
-    when 0...0.5
-      "#{term} is not fun."
-    when 0.5
-      "#{term} seems to be ok..."
-    else
-      "#{term} rocks!"
-    end
-  rescue Exception => e
-    e.message
-  end
-end
-
-# Example (your output may differ)
-
-puts DoesItRock.find_out('Sushi')       # Sushi seems to be ok...
-puts DoesItRock.find_out('Rain')        # Rain is not fun.
-puts DoesItRock.find_out('Bug hunting') # Bug hunting rocks!
+# 10 ---- Does it Rock or Not? ----
