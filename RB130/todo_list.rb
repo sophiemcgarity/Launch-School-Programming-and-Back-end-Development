@@ -41,10 +41,10 @@ class TodoList
     @todos = []
   end
 
-  def <<(item)
+  def <<(todo)
     raise TypeError, 'can only add Todo objects' unless todo.instance_of? Todo
-    @todo << todo
-      
+    @todos << todo
+
   end
   alias_method :add, :<<
 
@@ -83,12 +83,6 @@ class TodoList
   def done!
     @todos.each { |item| item.done! }
   end
-  
-  # def done!
-  #   @todos.each_index do |idx|
-  #     mark_done_at(idx)
-  #   end
-  # end
 
   def shift
     @todos.shift
@@ -103,18 +97,19 @@ class TodoList
   end
 
   def to_s
-    puts "---- #{title} ----"
-    @todos.each { |todo| puts todo }
+    str = "---- #{title} ----"
+    @todos.each { |todo| str << "\n#{todo.to_s}" }
+    str
   end
-  
+
   def each
     @todos.each do |todo|
       yield(todo)
     end
-    
+
     self
   end
-  
+
   def select
     selected = TodoList.new(title)
     each do |todo|
@@ -122,31 +117,31 @@ class TodoList
     end
     selected
   end
-  
+
   def find_by_title(title)
     select { |todo| todo.title == title }.first
   end
-  
+
   def all_done
     select { |todo| todo.done? }
   end
-  
+
   def all_not_done
     select { |todo| !todo.done? }
   end
-  
+
   def mark_done(title)
     find_by_title(title) && find_by_title(title).done!
   end
-  
+
   def mark_all_done
     each { |todo| todo.done! }
   end
-  
+
   def mark_all_undone
     each { |todo| todo.undone! }
   end
-  
+
 end
 
 todo1 = Todo.new("Buy milk")
