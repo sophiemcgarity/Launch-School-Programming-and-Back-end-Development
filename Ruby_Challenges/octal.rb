@@ -1,26 +1,17 @@
 # 3 - Octal
 class Octal
   def initialize(num)
-    @num = num
+    @nums = num.split('').map(&:to_i)
   end
 
   def to_decimal
-    multiples = []
-    nums = @num.split('')
-    decimal = 0
-
-    (nums.size).downto(1) do |index|
-      multiple = 8 ** (index - 1)
-      multiple = 1 if multiple == 0
-      multiples << multiple
+    digits = []
+    @nums.map.with_index do |item, index|
+      digits << item * 8 ** (@nums.size - index - 1)
     end
-
-    multiples.each_with_index do |item, index|
-      decimal += item * nums[index].to_i
-    end
-
-    decimal
+    digits.reduce(:+)
   end
+
 end
 
-p Octal.new('233').to_decimal
+p Octal.new('233').to_decimal  # 155
