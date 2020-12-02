@@ -9,10 +9,9 @@ class SumOfMultiples
   end
 
   def to(n)
-    result_multiples = []
-    (0...n).each do |num|
-      result_multiples << num if @multiple_input.any? { |multiple| num % multiple == 0 }
+    multiples = (0...n).select do |num|
+      num if @multiple_input.any? { |multiple| num % multiple == 0 }
     end
-    result_multiples.reduce(:+)
+    multiples.reduce(:+)
   end
 end
