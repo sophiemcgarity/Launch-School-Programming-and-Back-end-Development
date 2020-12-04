@@ -1,25 +1,23 @@
 # Pig Latin
 class PigLatin
-  TWO_CONSONANTS = ["ch", "qu", "th"]
-  THREE_CONSONANTS = ["thr", "sch"]
-
   def self.translate(str)
+  ending = "ay"
     pig_latin = str.split.map do |word|
       case
-      when word[0].match(/[^aeiouAEIOU]/) && word[1..2] == "qu"
-        word[3..-1] + word[0..2] + "ay"
-      when THREE_CONSONANTS.include?(word[0..2])
-        word[3..-1] + word[0..2] + "ay"
-      when TWO_CONSONANTS.include?(word[0..1])
-        word[2..-1] + word[0..1] + "ay"
+      when word[0].match(/[^aeiouAEIOU]/) && word[1..2].match(/(qu)/)
+        word[3..-1] + word[0..2] + ending
+      when word[0..2].match(/(thr|sch)/)
+        word[3..-1] + word[0..2] + ending
+      when word[0..1].match(/(qu|ch|th)/)
+        word[2..-1] + word[0..1] + ending
       when word[0] == "y" && word[1].match(/[aeiouAEIOU]/)
-        word[1..-1] + word[0] + "ay"
+        word[1..-1] + word[0] + ending
       when word[0] == "y" || word[0] == "x" && word[1].match(/[^aeiouAEIOU]/)
-        word + "ay"
+        word + ending
       when word[0].match(/[^aeiouAEIOU]/)
-        word[1..-1] + word[0] + "ay"
+        word[1..-1] + word[0] + ending
       when word[0].match(/[aeiouAEIOU]/)
-        word + "ay"
+        word + ending
       end
     end
     pig_latin.join(' ')
