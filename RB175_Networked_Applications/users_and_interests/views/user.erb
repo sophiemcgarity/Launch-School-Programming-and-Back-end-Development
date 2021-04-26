@@ -1,0 +1,7 @@
+<h2>Information for: <%= @user_name %></h2>
+<p>Email: <%= @email %></p>
+<p>Interests: <%= @interests.join(', ')%>.</p>
+<% @users.keys.each do |key| %>
+  <% next if key == @user_name %>
+  <a href="/<%= key %>"><%= key %></a>
+<% end %>
