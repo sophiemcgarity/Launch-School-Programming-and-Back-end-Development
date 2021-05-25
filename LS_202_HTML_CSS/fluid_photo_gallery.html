@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    body{
+      font-family: sans-serif;
+      background-color: black;
+      color: white;
+    }
+    main{
+      display: block;
+      margin: 0 auto;
+      min-width: 500px;
+      max-width: 1000px;
+      background-color: #333;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-areas:
+        "title title title title"
+        "large-photo large-photo large-photo large-photo"
+        "img1 img2 img3 img4"
+      ;
+      gap: 20px;
+    }
+    h1{
+      text-align: center;
+      grid-area: title;
+    }
+    figure {
+      grid-area: large-photo;
+    }
+    figure img{
+      border: 8px solid white;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    img{
+      border: 3px solid white;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .img-1{
+      grid-area: img1;
+    }
+    .img-2{
+      grid-area: img2;  
+    }
+    .img-3{
+      grid-area: img3;
+    }
+    .img-4{
+      grid-area: img4;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>My Photo Gallery</h1>
+    <figure>
+      <img src="1200x900.png">
+      <figcaption>Example Photo</figcaption>
+    </figure>
+    <img class="img-1" src="1200x900.png">
+    <img class="img-2" src="1200x900.png">
+    <img class="img-3" src="1200x900.png">
+    <img class="img-4" src="1200x900.png">
+  </main>
+</body>
+</html>

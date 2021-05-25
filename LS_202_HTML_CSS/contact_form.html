@@ -6,34 +6,24 @@
   <body>
     <form method="post" action="#">
       <fieldset>
+        <dl class="partial one_half left">
+          <dt><label for="first_name">First name</label></dt>
+          <dd><input type="text" id="first_name" name="first_name" /></dd>
+        </dl><!--
+        --><dl class="partial one_half right">
+          <dt><label for="last_name">Last name</label></dt>
+          <dd><input type="text" id="last_name" name="last_name" /></dd>
+        </dl>
         <dl>
-          <dt>
-            <label for="first_name">First name</label>
-          </dt>
-          <dd>
-            <input type="text" id="first_name" name="first_name" />
-          </dd>
-          <dt>
-            <label for="last_name">Last name</label>
-          </dt>
-          <dd>
-            <input type="text" id="last_name" name="last_name" />
-          </dd>
-          <dt>
-            <label for="email">Email address</label>
-          </dt>
-          <dd>
-            <input type="email" name="email" id="email" placeholder="john.doe@email.com" />
-          </dd>
-          <dt>
-            <label for="city">City</label>
-          </dt>
-          <dd> 
-            <input type="text" id="city" name="city" />
-          </dd>
-          <dt>
-            <label for="state">State</label>
-          </dt>
+          <dt><label for="email">Email address</label></dt>
+          <dd><input type="email" name="email" id="email" placeholder="john.doe@email.com" /></dd>
+        </dl>
+        <dl class="partial one_half">
+          <dt><label for="city">City</label></dt>
+          <dd><input type="text" id="city" name="city" /></dd>
+        </dl><!--
+        --><dl class="partial one_tenth both">
+          <dt><label for="state">State</label></dt>
           <dd>
             <select name="state" id="state">
               <option>AK</option>
@@ -89,12 +79,10 @@
               <option>WY</option>
             </select>
           </dd>
-          <dt>
-            <label for="zipcode">Zip code</label>
-          </dt>
-          <dd>
-            <input type="text" name="zipcode" id="zipcode" pattern="[0-9]{5}"/>
-          </dd>
+        </dl><!--
+        --><dl class="partial four_tenths">
+          <dt><label for="zipcode">Zip code</label></dt>
+          <dd><input type="text" name="zipcode" id="zipcode" pattern="[0-9]{5}"/></dd>
         </dl>
 
         <h1>Which color do you prefer?</h1>
@@ -137,6 +125,7 @@
         </dl>
         <input type="hidden" value="2021-05-05" name="timestamp"/>
         <input type="submit" value="Send" />
+
         <input type="reset" />
       </fieldset>
     </form>
