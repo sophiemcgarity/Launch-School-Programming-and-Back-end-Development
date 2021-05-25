@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     *{
       padding: 0;
@@ -15,7 +16,6 @@
     main{
       display: block;
       margin: 0 auto;
-      min-width: 500px;
       max-width: 1000px;
       background-color: #333;
       padding: 20px;
@@ -25,6 +25,7 @@
         "title title title title"
         "large-photo large-photo large-photo large-photo"
         "img1 img2 img3 img4"
+        "img5 img6 img7 img8"
       ;
       gap: 20px;
     }
@@ -57,6 +58,60 @@
     .img-4{
       grid-area: img4;
     }
+    .img-5{
+      grid-area: img5;
+    }
+    .img-6{
+      grid-area: img6;  
+    }
+    .img-7{
+      grid-area: img7;
+    }
+    .img-8{
+      grid-area: img8;
+    }
+    @media screen and (max-width: 899px){
+      main {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+        "title title title"
+        "large-photo large-photo large-photo"
+        "img1 img2 img3 "
+        "img4 img5 img6 "
+        "img7 img8   .  "
+      ;
+      }
+    }
+    @media screen and (max-width: 600px){
+      main {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        "title title"
+        "large-photo large-photo"
+        "img1 img2 "
+        "img3 img4 " 
+        "img5 img6 "
+        "img7 img8 "
+      ;
+      }
+    }
+    @media screen and (min-width: 1280px){
+      main {
+        max-width: 100%;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        "title title title title"
+        "large-photo large-photo large-photo img1"
+        "large-photo large-photo large-photo img2"
+        "large-photo large-photo large-photo img3"
+        "large-photo large-photo large-photo img4"
+        "large-photo large-photo large-photo img5"
+        "large-photo large-photo large-photo img6"
+        "large-photo large-photo large-photo img7"
+        "large-photo large-photo large-photo img8"
+      ;
+      }
+    }
   </style>
 </head>
 <body>
@@ -70,6 +125,10 @@
     <img class="img-2" src="1200x900.png">
     <img class="img-3" src="1200x900.png">
     <img class="img-4" src="1200x900.png">
+    <img class="img-5" src="1200x900.png">
+    <img class="img-6" src="1200x900.png">
+    <img class="img-7" src="1200x900.png">
+    <img class="img-8" src="1200x900.png">
   </main>
 </body>
 </html>
